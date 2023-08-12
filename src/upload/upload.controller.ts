@@ -17,6 +17,7 @@ export class UploadController {
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
+      // handling file upload execption
       fileFilter(_, file, callback) {
         if (!file.originalname.match(/.pdf$/)) {
           return callback(
@@ -25,11 +26,13 @@ export class UploadController {
           );
         }
 
+        // accepts the uploaded file
         callback(null, true);
       },
       storage: diskStorage({
         destination: 'notes',
         filename: (_, filename, cb) => {
+          // sets the name of the file
           const fileNameSplit = filename.originalname.split('.');
           cb(null, `${fileNameSplit[0]}.${fileNameSplit[1]}`);
         },
