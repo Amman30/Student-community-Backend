@@ -1,0 +1,30 @@
+
+{
+    "results": [
+      {
+        "id": 1,
+        "name": "Design of Concrete Structures-II"
+      },
+      {
+        "id": 2,
+        "name": "Irrigation & Hydraulic Structures"
+      },
+      {
+        "id": 3,
+        "name": "Structural Dynamics"
+      },
+      {
+        "id": 4,
+        "name": "Waste Water Engineering"
+       
+      },
+      {
+        "id": 5,
+        "name": "Traffic Engineering and Road facilities"
+       
+      }
+      
+      
+    ]
+  }
+  

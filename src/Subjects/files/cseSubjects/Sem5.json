@@ -1,0 +1,27 @@
+{
+    "results": [
+      {
+        "id": 1,
+        "name": "Design and Analysis of Algorithms "
+      },
+      {
+        "id": 2,
+        "name": "Operating System"
+      },
+      {
+        "id": 3,
+        "name": "Database Management System "
+      },
+      {
+        "id": 4,
+        "name": "Computer Networks "
+       
+      },
+      {
+        "id": 5,
+        "name": "Numerical Methods "
+      }
+      
+    ]
+  }
+  

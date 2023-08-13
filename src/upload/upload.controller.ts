@@ -14,7 +14,7 @@ import * as fs from 'fs';
 
 @Controller()
 export class UploadController {
-  @Post('upload/:department')
+  @Post('upload/:department/:semester/:course')
   @UseInterceptors(
     FileInterceptor('file', {
       // handling file upload execption
@@ -30,8 +30,8 @@ export class UploadController {
       },
       storage: diskStorage({
         destination: (req, file, cb) => {
-          const department = req.params.department;
-          const destinationPath = `uploadedFiles/${department}`;
+          const { department, semester, course } = req.params;
+          const destinationPath = `uploadedFiles/${department}/${semester}/${course}`;
           cb(null, destinationPath);
           try {
             fs.promises.mkdir(destinationPath, { recursive: true });
