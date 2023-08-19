@@ -1,0 +1,27 @@
+{
+    "results": [
+      {
+        "id": 1,
+        "name": "Object Oriented Programming "
+      },
+      {
+        "id": 2,
+        "name": "Software Engineering "
+      },
+      {
+        "id": 3,
+        "name": "Digital Electronics and Logic Design"
+      },
+      {
+        "id": 4,
+        "name": "Discrete Mathematics"
+       
+      },
+      {
+        "id": 5,
+        "name": "Basic Analog Electronics "
+      }
+      
+    ]
+  }
+  

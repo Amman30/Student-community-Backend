@@ -10,30 +10,38 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import * as fs from 'fs';
 
-@Controller('file')
+@Controller()
 export class UploadController {
-  // POST file/upload
-  @Post('upload')
+  @Post('upload/:department/:semester/:course')
   @UseInterceptors(
     FileInterceptor('file', {
       // handling file upload execption
       fileFilter(_, file, callback) {
-        if (!file.originalname.match(/.pdf$/)) {
+        if (!file.originalname.match(/\.pdf$/)) {
           return callback(
             new UnsupportedMediaTypeException('only .pdf files are supported'),
             false,
           );
         }
-
         // accepts the uploaded file
         callback(null, true);
       },
       storage: diskStorage({
-        destination: 'notes',
-        filename: (_, filename, cb) => {
-          // sets the name of the file
-          const fileNameSplit = filename.originalname.split('.');
+        destination: (req, file, cb) => {
+          const { department, semester, course } = req.params;
+          const destinationPath = `uploadedFiles/${department}/${semester}/${course}`;
+          cb(null, destinationPath);
+          try {
+            fs.promises.mkdir(destinationPath, { recursive: true });
+            cb(null, destinationPath);
+          } catch (error) {
+            cb(error, null);
+          }
+        },
+        filename: (_, file, cb) => {
+          const fileNameSplit = file.originalname.split('.');
           cb(null, `${fileNameSplit[0]}.${fileNameSplit[1]}`);
         },
       }),
@@ -52,7 +60,7 @@ export class UploadController {
     file: Express.Multer.File,
   ) {
     return {
-      message: 'file upload successful',
+      message: `file ${file.originalname} upload successful`,
       file: file.originalname,
       statusCode: 201,
     };

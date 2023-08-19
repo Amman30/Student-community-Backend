@@ -1,0 +1,31 @@
+{
+    "results": [
+      {
+        "id": 1,
+        "name": "MATHS"
+      },
+      {
+        "id": 2,
+        "name": "PHYSICS"
+      },
+      {
+        "id": 3,
+        "name": "CHEMISTRY"
+      },
+      {
+        "id": 4,
+        "name": "EVS"
+       
+      },
+      {
+        "id": 5,
+        "name": "ENGINEERING DRAWING"
+      },
+      {
+        "id": 5,
+        "name": "Communication Skills"
+      }
+      
+    ]
+  }
+  
