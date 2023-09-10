@@ -17,7 +17,6 @@ export class UploadController {
   @Post('upload/:department/:semester/:course')
   @UseInterceptors(
     FileInterceptor('file', {
-      // handling file upload execption
       fileFilter(_, file, callback) {
         if (!file.originalname.match(/\.pdf$/)) {
           return callback(
@@ -25,7 +24,6 @@ export class UploadController {
             false,
           );
         }
-        // accepts the uploaded file
         callback(null, true);
       },
       storage: diskStorage({
@@ -37,7 +35,7 @@ export class UploadController {
             fs.promises.mkdir(destinationPath, { recursive: true });
             cb(null, destinationPath);
           } catch (error) {
-            cb(error, null);
+            cb(error, '');
           }
         },
         filename: (_, file, cb) => {
@@ -52,8 +50,7 @@ export class UploadController {
       new ParseFilePipe({
         validators: [
           new FileTypeValidator({ fileType: /.pdf$/ }),
-          // max size shouldn't exceed 50Mbs
-          new MaxFileSizeValidator({ maxSize: 50000000 }),
+          new MaxFileSizeValidator({ maxSize: 200000000 }),
         ],
       }),
     )
