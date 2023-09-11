@@ -8,14 +8,16 @@ import { DepartmentModule } from './Departments/dept.module';
 import { SubjectsModule } from './Subjects/subject.module';
 import { UploadController } from './upload/upload.controller';
 import { UploadModule } from './upload/upload.module';
+import { InternshipsModule } from './internships/internships.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     DepartmentModule,
     SubjectsModule,
     UploadModule,
     AuthModule,
+    InternshipsModule,
   ],
   controllers: [AppController, UploadController],
   providers: [AppService],

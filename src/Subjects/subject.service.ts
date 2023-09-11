@@ -6,7 +6,7 @@ import * as fs from 'fs';
 export class SubjectsService {
   private sub: SubjectsDTO[];
 
-  loadSubjects(department: string, semester: number): void {
+  loadSubjects(department: string, semester: number) {
     const filePath = `src/Subjects/files/${department}Subjects/${semester}.json`;
     const rawData = fs.readFileSync(filePath, 'utf-8');
     this.sub = JSON.parse(rawData.toString());
