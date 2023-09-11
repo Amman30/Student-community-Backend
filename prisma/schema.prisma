@@ -18,11 +18,10 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-
 model internship {
-  id Int @id @default(autoincrement())
-  name String
-  description String
+  id            Int    @id @default(autoincrement())
+  name          String
+  description   String
   SkillRequired String
-  stipend Float
+  stipend       Float
 }
