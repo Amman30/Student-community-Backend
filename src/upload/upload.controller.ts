@@ -12,9 +12,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
 
-@Controller()
+@Controller('file')
 export class UploadController {
-  @Post('upload/:department/:semester/:course')
+  @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
       // handling file upload execption
@@ -29,15 +29,15 @@ export class UploadController {
         callback(null, true);
       },
       storage: diskStorage({
-        destination: (req, file, cb) => {
-          const { department, semester, course } = req.params;
-          const destinationPath = `uploadedFiles/${department}/${semester}/${course}`;
+        destination: (req, file, cb?) => {
+          const { department, semester } = req.body;
+          const destinationPath = `notes/${department}/${semester}`;
           cb(null, destinationPath);
           try {
             fs.promises.mkdir(destinationPath, { recursive: true });
             cb(null, destinationPath);
           } catch (error) {
-            cb(error, null);
+            cb(error, '');
           }
         },
         filename: (_, file, cb) => {
