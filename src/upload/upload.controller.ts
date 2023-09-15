@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   FileTypeValidator,
   MaxFileSizeValidator,
@@ -10,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import * as fs from 'fs';
+import FileDto from './dto';
 
 @Controller('file')
 export class UploadController {
@@ -27,25 +28,27 @@ export class UploadController {
         callback(null, true);
       },
       storage: diskStorage({
-        destination: (req, file, cb?) => {
-          const { department, semester } = req.body;
-          const destinationPath = `notes/${department}/${semester}`;
-          cb(null, destinationPath);
+        destination: (req, _, cb?) => {
           try {
-            fs.promises.mkdir(destinationPath, { recursive: true });
+            const destinationPath = `notes`;
             cb(null, destinationPath);
           } catch (error) {
             cb(error, '');
           }
         },
         filename: (_, file, cb) => {
-          const fileNameSplit = file.originalname.split('.');
-          cb(null, `${fileNameSplit[0]}.${fileNameSplit[1]}`);
+          try {
+            const fileNameSplit = file.originalname.split('.');
+            cb(null, `${fileNameSplit[0]}.${fileNameSplit[1]}`);
+          } catch (error) {
+            cb(error, '');
+          }
         },
       }),
     }),
   )
   async uploadFile(
+    @Body() dto: FileDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
