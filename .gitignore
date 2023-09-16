@@ -41,5 +41,5 @@ lerna-debug.log*
 dev.db*
 
 # uploads
-static/notes/*
+static/**
 !**/.gitkeep
