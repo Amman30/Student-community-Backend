@@ -12,14 +12,23 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import FileDto from './dto';
+import { extname } from 'path';
+import { randomUUID } from 'crypto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UploadService } from './upload.service';
 
 @Controller('file')
 export class UploadController {
+  constructor(private prismaService: PrismaService) {}
+
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter(_, file, callback) {
-        if (!file.originalname.match(/\.pdf$/)) {
+        if (
+          extname(file.originalname) !== '.pdf' ||
+          file.mimetype !== 'application/pdf'
+        ) {
           return callback(
             new UnsupportedMediaTypeException('only .pdf files are supported'),
             false,
@@ -28,21 +37,11 @@ export class UploadController {
         callback(null, true);
       },
       storage: diskStorage({
-        destination: (req, _, cb?) => {
-          try {
-            const destinationPath = `notes`;
-            cb(null, destinationPath);
-          } catch (error) {
-            cb(error, '');
-          }
-        },
-        filename: (_, file, cb) => {
-          try {
-            const fileNameSplit = file.originalname.split('.');
-            cb(null, `${fileNameSplit[0]}.${fileNameSplit[1]}`);
-          } catch (error) {
-            cb(error, '');
-          }
+        destination: UploadService.getBaseDir(),
+        filename: (_, file, callback) => {
+          const name = randomUUID();
+          const extension = extname(file.originalname);
+          callback(null, `notes/${name}${extension}`);
         },
       }),
     }),
@@ -59,6 +58,32 @@ export class UploadController {
     )
     file: Express.Multer.File,
   ) {
+    // TODO: Move this logic to department service
+    const department = await this.prismaService.department.findFirst({
+      where: { department: dto.department, semester: dto.semester },
+    });
+
+    if (department) {
+      await this.prismaService.department.update({
+        where: { id: department.id },
+        data: {
+          file: {
+            create: { name: dto.name, path: file.filename },
+          },
+        },
+      });
+    } else {
+      await this.prismaService.department.create({
+        data: {
+          department: dto.department,
+          semester: dto.semester,
+          file: {
+            create: { name: dto.name, path: file.path },
+          },
+        },
+      });
+    }
+
     return {
       message: `file ${file.originalname} upload successful`,
       file: file.originalname,
