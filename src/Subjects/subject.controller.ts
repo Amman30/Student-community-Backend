@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { SubjectsService } from './subject.service';
 
-@Controller(':department/:semester')
+@Controller('subjects')
 export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
 
-  @Get()
+  @Get(':department/:semester')
   getSubjectsNames(
     @Param('department') department: string,
     @Param('semester') semester: number,
