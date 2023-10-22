@@ -8,4 +8,8 @@ export class FileDto {
   @IsNotEmpty()
   @IsString()
   semester: string;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 }

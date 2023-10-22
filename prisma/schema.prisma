@@ -27,15 +27,18 @@ model internship {
 }
 
 model File {
-  id          String     @id @default(uuid())
-  name        String     @unique
+  id          String      @id @default(uuid())
+  name        String
+  path        String      @unique
   Deparment   Department? @relation(fields: [deparmentId], references: [id])
   deparmentId String?
 }
 
 model Department {
   id         String @id @default(uuid())
-  department String @unique
+  department String
   semester   String
   file       File[]
+
+  @@unique([department, semester])
 }
