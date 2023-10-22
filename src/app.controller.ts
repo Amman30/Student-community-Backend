@@ -1,12 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { UploadService } from './upload/upload.service';
+import { PrismaService } from './prisma/prisma.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   @Get()
-  getGreetings(): string {
-    return this.appService.getGreetings();
+  async getGreetings() {
+    const files = await this.prismaService.file.findMany();
+
+    return files.map((file) => UploadService.getUrlForPath(file.path));
   }
 }

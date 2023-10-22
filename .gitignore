@@ -36,3 +36,7 @@ lerna-debug.log*
 
 # db files
 dev.db*
+
+# uploads
+static/**
+!**/.gitkeep
