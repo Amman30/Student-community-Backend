@@ -1,8 +1,8 @@
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty, IsEmail } from 'class-validator';
 
 export class Dto {
   @IsString()
-  name: string;
+  role: string;
 
   @IsString()
   description: string;
@@ -12,4 +12,10 @@ export class Dto {
 
   @IsNumber()
   stipend: number;
+
+  @IsEmail()
+  email: string;
+
+  @IsNumber()
+  phoneNumber: number;
 }

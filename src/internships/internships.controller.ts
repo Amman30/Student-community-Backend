@@ -11,13 +11,8 @@ interface Success {
 export class InternshipsController {
   constructor(private readonly intenService: InternshipService) {}
 
-  @Post()
-  async create(@Body() Dtoo: Dto): Promise<object | null> {
+  @Post('create')
+  async create(@Body() Dtoo: Dto) {
     await this.intenService.createNewInternship(Dtoo);
-    const response: Success = {
-      message: 'Details Added Successfully',
-      code: 201,
-    };
-    return response;
   }
 }
