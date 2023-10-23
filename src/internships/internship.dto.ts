@@ -10,12 +10,12 @@ export class Dto {
   @IsString()
   SkillRequired: string;
 
-  @IsNumber()
-  stipend: number;
+  @IsString()
+  stipend: string;
 
   @IsEmail()
   email: string;
 
-  @IsNumber()
-  phoneNumber: number;
+  @IsString()
+  phoneNumber: string;
 }

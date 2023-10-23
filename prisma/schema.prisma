@@ -23,9 +23,9 @@ model internship {
   role          String
   description   String
   SkillRequired String
-  stipend       Float
+  stipend       String
   email         String
-  phoneNumber   Int
+  phoneNumber   String
 }
 
 model File {

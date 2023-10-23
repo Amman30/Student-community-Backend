@@ -4,7 +4,7 @@ CREATE TABLE "internship" (
     "role" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "SkillRequired" TEXT NOT NULL,
-    "stipend" REAL NOT NULL,
+    "stipend" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "phoneNumber" INTEGER NOT NULL
+    "phoneNumber" TEXT NOT NULL
 );
